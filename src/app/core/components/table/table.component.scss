@@ -17,6 +17,13 @@ tr.example-element-row:not(.example-expanded-row):active {
 
 .example-element-row td {
   border-bottom-width: 0;
+  padding: 0 5px;
+  word-break: break-word;
+
+  &:first-child {
+    padding-left: 16px;
+    word-break: unset;
+  }
 }
 
 .example-element-detail {

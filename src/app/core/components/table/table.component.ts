@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { ELEMENT_DATA } from '../../mocks/constants';
-import { PeriodicElement } from '../../mocks/mock.interfaces';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ItemResponse } from '../../interfaces/response.interfaces';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { AudioApiService } from '../../services/audio-api.service';
+
+const whiteSpaceRegex = /\s+/g;
 
 @Component({
   selector: 'app-table',
@@ -15,15 +18,32 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
     ]),
   ],
 })
-export class TableComponent implements OnInit {
-  dataSource = ELEMENT_DATA;
-  columnsToDisplay = ['name', 'weight', 'symbol', 'position'];
-  columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
-  expandedElement: PeriodicElement | null = null;
+export class TableComponent implements OnInit, OnDestroy {
+  private subscription: Subscription | undefined;
+  protected dataSource: ItemResponse[] = [];
+  protected columnsToDisplay = ['id', 'name', 'fileName'];
+  protected columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
+  protected expandedElement: ItemResponse | null = null;
 
-  constructor() { }
+  public constructor(private audioApiService: AudioApiService) { }
 
-  ngOnInit(): void {
+  public ngOnInit() {
+    this.subscription = this.audioApiService.getTracks(10).subscribe({
+      next: (data) => {
+        this.dataSource = data.results.map((track) => ({
+          ...track,
+          fileName: `${track.name.replace(whiteSpaceRegex, '_')}_-_${track.artist_idstr.replace(whiteSpaceRegex, '_')}.mp3`
+        }));
+      },
+      error: (err) => {
+        console.log(err.message)
+      }
+    })
   }
 
+  public ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
 }
