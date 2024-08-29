@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
-import { ItemResponse } from '../../interfaces/response.interfaces';
+import type { ItemResponse } from '../../interfaces/response.interfaces';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { AudioApiService } from '../../services/audio-api.service';
 

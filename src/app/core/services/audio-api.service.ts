@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ResponseInterface } from '../interfaces/response.interfaces';
+import type { ResponseInterface } from '../interfaces/response.interfaces';
 
 @Injectable({
   providedIn: 'root'
