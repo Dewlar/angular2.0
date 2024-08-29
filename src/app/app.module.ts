@@ -2,6 +2,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { MatCommonModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -15,7 +16,7 @@ import { TableComponent } from './core/components/table/table.component';
   declarations: [
     AppComponent,
     HomePageComponent,
-    TableComponent
+    TableComponent,
   ],
   imports: [
     BrowserModule,
@@ -24,6 +25,7 @@ import { TableComponent } from './core/components/table/table.component';
     MatIconModule,
     MatCommonModule,
     HttpClientModule,
+    MatSnackBarModule,
   ],
   providers: [
     {
